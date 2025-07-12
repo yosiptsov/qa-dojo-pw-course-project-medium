@@ -1,0 +1,25 @@
+{
+  "name": "qa-dojo-pw-course-project-medium",
+  "version": "1.0.0",
+  "description": "This is a final course project QA DOJO Playwright + Typescript. Difficulty: medium",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yosiptsov/qa-dojo-pw-course-project-medium.git"
+  },
+  "keywords": [
+    "playwright",
+    "typescript",
+    "qa",
+    "automation"
+  ],
+  "author": "Yurii Osiptsov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yosiptsov/qa-dojo-pw-course-project-medium/issues"
+  },
+  "homepage": "https://github.com/yosiptsov/qa-dojo-pw-course-project-medium#readme"
+}
