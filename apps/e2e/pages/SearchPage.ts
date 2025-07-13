@@ -19,7 +19,7 @@ export class SearchPage extends BasePage {
     // counts number of products on page
     const getNumberOfProductsOnPage = await this.getNumberOfProductsOnPage();
 
-    for (let i = 0; i <= getNumberOfProductsOnPage; i++) {
+    for (let i = 0; i < getNumberOfProductsOnPage; i++) {
       await this.productCardComponent.buttonOpenSizeSelectorLocator.nth(i).click({ timeout: 5000 });
       //just in case will add an expect between opening list of sizes for different products.
       await expect(this.productCardComponent.productListOfSizesLocator).toBeVisible();
@@ -33,6 +33,13 @@ export class SearchPage extends BasePage {
   }
 
   async addAllAvailableSizesToCartByNumber(productNumber: number): Promise<void> {
+    await this.productCardComponent.productPriceLocator.nth(productNumber).click();
     await this.productCardComponent.buttonOpenSizeSelectorLocator.nth(productNumber).click();
+    const numberOfAvailableSizes = await this.productCardComponent.availableSizeSelectorLocator.count();
+    for(let i=0; i < numberOfAvailableSizes; i++){
+        //await this.productCardComponent.buttonOpenSizeSelectorLocator.nth(productNumber).click();
+        await this.productCardComponent.availableSizeSelectorLocator.nth(i).click();
+    }
+    console.log(numberOfAvailableSizes);
   }
 }

@@ -7,6 +7,7 @@ export class ProductCardComponent extends BaseComponent {
   availableSizeSelectorLocator: Locator;
   productMediaImageLocator: Locator;
   productListOfSizesLocator: Locator;
+  productPriceLocator: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -14,5 +15,6 @@ export class ProductCardComponent extends BaseComponent {
     this.availableSizeSelectorLocator = this.page.locator("[data-qa-action=size-in-stock]");
     this.productMediaImageLocator = this.page.locator("[data-qa-qualifier=media-image]");
     this.productListOfSizesLocator = this.page.locator("[class=size-selector-sizes]");
+    this.productPriceLocator = this.page.locator("[data-qa-id=price-container-current]");
   }
 }

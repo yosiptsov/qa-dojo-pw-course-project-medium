@@ -1,6 +1,5 @@
 import test from "@playwright/test";
 import { MainMenuComponent } from "../apps/e2e/components/MainMenuComponent";
-import { ProductCardComponent } from "../apps/e2e/components/ProductCardComponent";
 import { SearchPage } from '../apps/e2e/pages/SearchPage';
 
 
@@ -48,8 +47,9 @@ test("open zara and add cookies", async ({ page, context }) => {
   await mainMenuComponent.openMainMenu();
   await mainMenuComponent.clickProductInMainMenu('КАРДИГАНИ | СВЕТРИ');
   const firstProductWithAvailableSizes = await searchPage.findFirstProductWithAvailableSizesMoreThan(4);
-
-  console.log(firstProductWithAvailableSizes);
+  const numberOfSizes = await searchPage.addAllAvailableSizesToCartByNumber(Number(firstProductWithAvailableSizes));
+  console.log(numberOfSizes);
+  
   //const productTilesCount = await searchPage.getNumberOfProductsOnPage();
   //console.log(productTilesCount);
   //const productTilesCount = await page.locator('[data-qa-action=product-grid-open-size-selector]').count();
