@@ -7,7 +7,7 @@ import { ProductInCartComponent } from '../apps/e2e/components/ProductInCartComp
 test("open zara and add cookies", async ({ page, context }) => {
   // test data setup
   const testOptions = {
-    productName: "ФУТБОЛКИ",
+    productName: "КАРДИГАНИ | СВЕТРИ",
     numberOfNeededSizes: 4,
   };
   const mainMenuComponent = new MainMenuComponent(page);
@@ -60,6 +60,7 @@ test("open zara and add cookies", async ({ page, context }) => {
   await searchPage.addAllAvailableSizesToCartByNumber(firstProductWithAvailableSizes);
   await headerComponents.clickGoToCartLink();
   await productInCartComponent.removeEachSecondProductFromCart(firstProductWithAvailableSizes.numberOfSizesToClick);
+
 
   //const productTilesCount = await searchPage.getNumberOfProductsOnPage();
   //console.log(productTilesCount);

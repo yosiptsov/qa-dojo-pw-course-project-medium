@@ -53,9 +53,12 @@ export class SearchPage extends BasePage {
     
     // open the product card and add all available sizes
     for(let i=0; i < product.numberOfSizesToClick; i++){
-        await this.productCardComponent.buttonOpenSizeSelectorLocator.nth(product.productNumber).click();
+        await expect(this.productCardComponent.buttonOpenSizeSelectorLocator.nth(product.productNumber)).toBeVisible();
+        await this.productCardComponent.buttonOpenSizeSelectorLocator.nth(product.productNumber).click({ timeout: 5000 });
+        await expect(this.productCardComponent.availableSizeSelectorLocator.nth(i)).toBeVisible({ timeout: 5000 });
         await this.productCardComponent.availableSizeSelectorLocator.nth(i).click();
         await this.rollingCartComponent.closeRollingCart();
+
     }
   }
 }
