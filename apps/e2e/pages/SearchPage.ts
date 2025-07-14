@@ -1,13 +1,16 @@
 import { Page, expect } from "@playwright/test";
 import { BasePage } from "./BasePage";
 import { ProductCardComponent } from "../components/ProductCardComponent";
+import { RollingCartComponent } from '../components/RollingCartComponent';
 
 export class SearchPage extends BasePage {
-  productCardComponent: ProductCardComponent;
+  private productCardComponent: ProductCardComponent;
+  private rollingCartComponent: RollingCartComponent;
 
   constructor(page: Page) {
     super(page);
     this.productCardComponent = new ProductCardComponent(this.page);
+    this.rollingCartComponent = new RollingCartComponent(this.page);
   }
 
   private async getNumberOfProductsOnPage(): Promise<number> {
@@ -34,12 +37,14 @@ export class SearchPage extends BasePage {
 
   async addAllAvailableSizesToCartByNumber(productNumber: number): Promise<void> {
     await this.productCardComponent.productPriceLocator.nth(productNumber).click();
-    await this.productCardComponent.buttonOpenSizeSelectorLocator.nth(productNumber).click();
+    
     const numberOfAvailableSizes = await this.productCardComponent.availableSizeSelectorLocator.count();
     for(let i=0; i < numberOfAvailableSizes; i++){
-        //await this.productCardComponent.buttonOpenSizeSelectorLocator.nth(productNumber).click();
+        await this.productCardComponent.buttonOpenSizeSelectorLocator.nth(productNumber).click();
         await this.productCardComponent.availableSizeSelectorLocator.nth(i).click();
+        await this.rollingCartComponent.closeRollingCart();
+        console.log(i);
+        console.log(numberOfAvailableSizes);
     }
-    console.log(numberOfAvailableSizes);
   }
 }
