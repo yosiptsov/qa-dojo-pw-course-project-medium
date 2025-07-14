@@ -23,7 +23,7 @@ export class SearchPage extends BasePage {
   }
 
   //async findFirstProductWithAvailableSizesMoreThan(numberOfAvailableSizes: number): Promise<Array<number> | undefined> {
-  async findFirstProductWithAvailableSizesMoreThan(numberOfAvailableSizes: number): Promise<Product | undefined> {
+  async findFirstProductWithAvailableSizesMoreThan(numberOfAvailableSizes: number): Promise<Product> {
     // products are loaded in chunks by 28 items, so we need to scroll down of the page to load all products.
     //? Is it ok to use a function from the BasePage class in such a way?
     await this.scrollToEndOfPage();
@@ -43,9 +43,7 @@ export class SearchPage extends BasePage {
         return { productNumber: i, numberOfSizesToClick: currentProdSizes }
       }
     }
-    //return "No products with set number of sizes were found";
-    //? I am not sure, is it better to return a message or undefined. Undefined simplifies using IF in the test.
-    return undefined;
+    throw new Error('No products with set number of sizes were found.');
   }
 
 

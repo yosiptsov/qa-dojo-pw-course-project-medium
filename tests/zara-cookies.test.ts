@@ -1,22 +1,22 @@
 import test, { expect } from "@playwright/test";
 import { MainMenuComponent } from "../apps/e2e/components/MainMenuComponent";
-import { HeaderComponents } from '../apps/e2e/components/HeaderComponent';
-import { SearchPage } from '../apps/e2e/pages/SearchPage';
-
+import { HeaderComponents } from "../apps/e2e/components/HeaderComponent";
+import { SearchPage } from "../apps/e2e/pages/SearchPage";
+import { ProductInCartComponent } from '../apps/e2e/components/ProductInCartComponent';
 
 test("open zara and add cookies", async ({ page, context }) => {
-
-// test data setup
-const testOptions = {
-  productName: 'ФУТБОЛКИ',
-  numberOfNeededSizes: 4
-}
+  // test data setup
+  const testOptions = {
+    productName: "ФУТБОЛКИ",
+    numberOfNeededSizes: 4,
+  };
   const mainMenuComponent = new MainMenuComponent(page);
   const searchPage = new SearchPage(page);
   const headerComponents = new HeaderComponents(page);
+  const productInCartComponent = new ProductInCartComponent(page);
 
   await page.goto("/", { waitUntil: "commit" });
-  
+
   //prepare dates for cookie values:
   const currentDate = new Date();
   const expirationDate = new Date(
@@ -50,19 +50,17 @@ const testOptions = {
     },
   ]);
 
-  await page.goto('/ua/');
+  await page.goto("/ua/");
   await mainMenuComponent.openMainMenu();
   await mainMenuComponent.clickProductInMainMenu(testOptions.productName);
-  const firstProductWithAvailableSizes = await searchPage.findFirstProductWithAvailableSizesMoreThan(testOptions.numberOfNeededSizes);
-  if(firstProductWithAvailableSizes) {
-    await searchPage.addAllAvailableSizesToCartByNumber(firstProductWithAvailableSizes);
-  } else {
-    // ? Is it a good way to show an error, or it would be better to throw an error? 
-    expect(firstProductWithAvailableSizes, 'No products with set number of sizes were found').toBeDefined;
-  }
+  const firstProductWithAvailableSizes = await searchPage.findFirstProductWithAvailableSizesMoreThan(
+    testOptions.numberOfNeededSizes
+  );
   
+  await searchPage.addAllAvailableSizesToCartByNumber(firstProductWithAvailableSizes);
   await headerComponents.clickGoToCartLink();
-  
+  await productInCartComponent.removeEachSecondProductFromCart(firstProductWithAvailableSizes.numberOfSizesToClick);
+
   //const productTilesCount = await searchPage.getNumberOfProductsOnPage();
   //console.log(productTilesCount);
   //const productTilesCount = await page.locator('[data-qa-action=product-grid-open-size-selector]').count();
