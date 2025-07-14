@@ -1,5 +1,6 @@
 import test, { expect } from "@playwright/test";
 import { MainMenuComponent } from "../apps/e2e/components/MainMenuComponent";
+import { HeaderComponents } from '../apps/e2e/components/HeaderComponent';
 import { SearchPage } from '../apps/e2e/pages/SearchPage';
 
 
@@ -12,6 +13,7 @@ const testOptions = {
 }
   const mainMenuComponent = new MainMenuComponent(page);
   const searchPage = new SearchPage(page);
+  const headerComponents = new HeaderComponents(page);
 
   await page.goto("/", { waitUntil: "commit" });
   
@@ -59,6 +61,7 @@ const testOptions = {
     expect(firstProductWithAvailableSizes, 'No products with set number of sizes were found').toBeDefined;
   }
   
+  await headerComponents.clickGoToCartLink();
   
   //const productTilesCount = await searchPage.getNumberOfProductsOnPage();
   //console.log(productTilesCount);
