@@ -1,10 +1,15 @@
-import test from "@playwright/test";
+import test, { expect } from "@playwright/test";
 import { MainMenuComponent } from "../apps/e2e/components/MainMenuComponent";
 import { SearchPage } from '../apps/e2e/pages/SearchPage';
 
 
 test("open zara and add cookies", async ({ page, context }) => {
 
+// test data setup
+const testOptions = {
+  productName: 'ФУТБОЛКИ',
+  numberOfNeededSizes: 4
+}
   const mainMenuComponent = new MainMenuComponent(page);
   const searchPage = new SearchPage(page);
 
@@ -45,10 +50,15 @@ test("open zara and add cookies", async ({ page, context }) => {
 
   await page.goto('/ua/');
   await mainMenuComponent.openMainMenu();
-  await mainMenuComponent.clickProductInMainMenu('КАРДИГАНИ | СВЕТРИ');
-  const firstProductWithAvailableSizes = await searchPage.findFirstProductWithAvailableSizesMoreThan(4);
-  const numberOfSizes = await searchPage.addAllAvailableSizesToCartByNumber(Number(firstProductWithAvailableSizes));
-  console.log(numberOfSizes);
+  await mainMenuComponent.clickProductInMainMenu(testOptions.productName);
+  const firstProductWithAvailableSizes = await searchPage.findFirstProductWithAvailableSizesMoreThan(testOptions.numberOfNeededSizes);
+  if(firstProductWithAvailableSizes) {
+    await searchPage.addAllAvailableSizesToCartByNumber(firstProductWithAvailableSizes);
+  } else {
+    // ? Is it a good way to show an error, or it would be better to throw an error? 
+    expect(firstProductWithAvailableSizes, 'No products with set number of sizes were found').toBeDefined;
+  }
+  
   
   //const productTilesCount = await searchPage.getNumberOfProductsOnPage();
   //console.log(productTilesCount);
