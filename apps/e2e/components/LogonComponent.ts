@@ -1,4 +1,4 @@
-import { Locator, Page } from "@playwright/test";
+import { expect, Locator, Page } from "@playwright/test";
 import { BaseComponent } from "./BaseComponent";
 
 export class LogonComponent extends BaseComponent{
@@ -10,7 +10,9 @@ export class LogonComponent extends BaseComponent{
         this.buttonRegisterLocator = this.page.locator('[data-qa-id="logon-view-alternate-button"]');
     }
 
-    async clickButtonRegister(){
+    async clickButtonRegister(): Promise<void>{
+        await expect(this.buttonRegisterLocator).toBeVisible();
+        await expect(this.buttonRegisterLocator).toBeEnabled();
         await this.buttonRegisterLocator.click();
     }
 }

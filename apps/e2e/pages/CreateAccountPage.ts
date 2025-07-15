@@ -1,4 +1,4 @@
-import { Locator, Page } from "@playwright/test";
+import { expect, Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
 
 export class CreateAccountPage extends BasePage {
@@ -10,6 +10,8 @@ export class CreateAccountPage extends BasePage {
   }
 
   async buttonCreateUserAccountClick(): Promise<void> {
+    await expect(this.buttonCreateUserAccountLocator).toBeVisible();
+    await expect(this.buttonCreateUserAccountLocator).toBeEnabled();
     await this.buttonCreateUserAccountLocator.click();
   }
 }

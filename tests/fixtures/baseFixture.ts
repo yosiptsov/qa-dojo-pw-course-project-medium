@@ -43,10 +43,8 @@ export const test = base.extend<Pages>({
 
       await page.goto("https://www.zara.com/ua/", { waitUntil: "commit" });
 
-
       // add cookies to close popup window 'Cookies Consent'
       await page.context().addCookies([
-//      await context.addCookies([
         {
           name: "OptanonAlertBoxClosed",
           value: currentDate.toISOString(),
@@ -65,7 +63,7 @@ export const test = base.extend<Pages>({
           sameSite: "Lax",
         },
       ]);
-    await page.context().storageState({ path: storageStatePath as string });
+      await page.context().storageState({ path: storageStatePath as string });
       await page.close();
     }
     await use(storageStatePath);

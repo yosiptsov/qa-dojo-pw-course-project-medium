@@ -9,7 +9,7 @@ export abstract class BasePage{
         this.copyrightTextLocator = this.page.getByText('© All rights reserved');
     }
 
-    async scrollToEndOfPage(){
+    async scrollToEndOfPage(): Promise<void>{
         await this.copyrightTextLocator.click();
     }
 }

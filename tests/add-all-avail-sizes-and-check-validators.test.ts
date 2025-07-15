@@ -1,13 +1,20 @@
-import { expect } from "@playwright/test";
-import { test } from './fixtures/baseFixture'
+import { test } from "./fixtures/baseFixture";
 
 test.use({});
 
 test(
   "TST-01: Open product category list, add all available sizes if they are more than set value, remove needed from cart and check validators in create account",
   { tag: "@search, @createAccountValidation, @cart" },
-  async ({ mainMenuComponent, searchPage, headerComponents, productInCartComponent, cartPage, logonComponent, createAccountFormComponent, createAccountPage }) => {
-    
+  async ({
+    mainMenuComponent,
+    searchPage,
+    headerComponents,
+    productInCartComponent,
+    cartPage,
+    logonComponent,
+    createAccountFormComponent,
+    createAccountPage,
+  }) => {
     // test data setup
     const testOptions = {
       productName: "СУКНІ",
@@ -38,3 +45,5 @@ test(
     });
   }
 );
+
+

@@ -9,7 +9,7 @@ export class RollingCartComponent extends BaseComponent{
         this.buttonCloseLocator = this.page.getByRole('button', { name: 'Закрити' });
     }
 
-    async closeRollingCart(){
+    async closeRollingCart(): Promise<void>{
         await expect(this.buttonCloseLocator).toBeEnabled();
         await expect(this.buttonCloseLocator).toBeVisible();
         await this.buttonCloseLocator.click();

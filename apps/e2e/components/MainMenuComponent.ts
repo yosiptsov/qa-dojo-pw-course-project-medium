@@ -12,12 +12,12 @@ export class MainMenuComponent extends BaseComponent{
         this.buttonOpenMenuLocator = this.page.getByRole('button', { name: 'Відкрити меню' });
     }
     
-    async openMainMenu(){
+    async openMainMenu(): Promise<void>{
         await expect(this.buttonOpenMenuLocator).toBeVisible();
         await this.buttonOpenMenuLocator.click();
     }
 
-    async clickProductInMainMenu(productName: string){
+    async clickProductInMainMenu(productName: string): Promise<void>{
         await this.page.getByRole('link', { name: productName }).click();
         await expect(this.productCard.productMediaImageLocator.last()).toBeVisible();
     }

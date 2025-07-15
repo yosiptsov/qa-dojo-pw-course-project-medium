@@ -9,7 +9,7 @@ export class HeaderComponents extends BaseComponent{
         this.goToCartLink = this.page.locator("[data-qa-id=layout-header-go-to-cart]")
     }
 
-    async clickGoToCartLink(){
+    async clickGoToCartLink(): Promise<void>{
        await this.goToCartLink.click();
     }
 }
