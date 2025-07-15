@@ -3,17 +3,25 @@ import { MainMenuComponent } from "../apps/e2e/components/MainMenuComponent";
 import { HeaderComponents } from "../apps/e2e/components/HeaderComponent";
 import { SearchPage } from "../apps/e2e/pages/SearchPage";
 import { ProductInCartComponent } from '../apps/e2e/components/ProductInCartComponent';
+import { CartPage } from "../apps/e2e/pages/CartPage";
+import { CreateAccountFormComponent } from '../apps/e2e/components/CreateAccountFormComponent';
+import { LogonComponent } from '../apps/e2e/components/LogonComponent';
+import { CreateAccountPage } from "../apps/e2e/pages/CreateAccountPage";
 
 test("open zara and add cookies", async ({ page, context }) => {
   // test data setup
   const testOptions = {
-    productName: "КАРДИГАНИ | СВЕТРИ",
+    productName: "СУКНІ",
     numberOfNeededSizes: 4,
   };
   const mainMenuComponent = new MainMenuComponent(page);
   const searchPage = new SearchPage(page);
   const headerComponents = new HeaderComponents(page);
   const productInCartComponent = new ProductInCartComponent(page);
+  const cartPage = new CartPage(page);
+  const logonComponent = new LogonComponent(page);
+  const createAccountFormComponent = new CreateAccountFormComponent(page);
+  const createAccountPage = new CreateAccountPage(page);
 
   await page.goto("/", { waitUntil: "commit" });
 
@@ -61,9 +69,9 @@ test("open zara and add cookies", async ({ page, context }) => {
   await headerComponents.clickGoToCartLink();
   await productInCartComponent.removeEachSecondProductFromCart(firstProductWithAvailableSizes.numberOfSizesToClick);
 
+  await cartPage.clickContinueButton();
+  await logonComponent.clickButtonRegister();
+  await createAccountPage.buttonCreateUserAccountClick();
+  await createAccountFormComponent.checkCreateAccountFormValidators();
 
-  //const productTilesCount = await searchPage.getNumberOfProductsOnPage();
-  //console.log(productTilesCount);
-  //const productTilesCount = await page.locator('[data-qa-action=product-grid-open-size-selector]').count();
-  //console.log(productTilesCount);
 });

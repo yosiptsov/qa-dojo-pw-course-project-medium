@@ -1,4 +1,4 @@
-import { Locator } from "@playwright/test";
+import { expect, Locator } from "@playwright/test";
 import { BaseComponent } from "./BaseComponent";
 
 export class RollingCartComponent extends BaseComponent{
@@ -10,6 +10,8 @@ export class RollingCartComponent extends BaseComponent{
     }
 
     async closeRollingCart(){
+        await expect(this.buttonCloseLocator).toBeEnabled();
+        await expect(this.buttonCloseLocator).toBeVisible();
         await this.buttonCloseLocator.click();
     }
 
