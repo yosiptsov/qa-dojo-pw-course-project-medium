@@ -13,6 +13,7 @@ export class MainMenuComponent extends BaseComponent{
     }
     
     async openMainMenu(){
+        await expect(this.buttonOpenMenuLocator).toBeVisible();
         await this.buttonOpenMenuLocator.click();
     }
 
