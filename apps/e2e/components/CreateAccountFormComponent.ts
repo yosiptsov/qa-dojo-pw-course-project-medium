@@ -14,7 +14,6 @@ export class CreateAccountFormComponent extends BaseComponent {
 
   async checkCreateAccountFormValidators(createAccountFields: Array<string> = ['email', 'password', 'firstName', 'lastName']): Promise<void>{
     for(const field of createAccountFields){
-        console.log(field);
         await expect(this.getValidationMessageLocator(field), `Validation message for field ${field} is not displayed`).toBeVisible();
     }
   }
