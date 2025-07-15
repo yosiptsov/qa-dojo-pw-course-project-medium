@@ -1,12 +1,12 @@
 import { Page, expect } from "@playwright/test";
 import { BasePage } from "./BasePage";
 import { ProductCardComponent } from "../components/ProductCardComponent";
-import { RollingCartComponent } from '../components/RollingCartComponent';
+import { RollingCartComponent } from "../components/RollingCartComponent";
 
 export type Product = {
-    productNumber: number,
-    numberOfSizesToClick: number;
-}
+  productNumber: number;
+  numberOfSizesToClick: number;
+};
 export class SearchPage extends BasePage {
   private productCardComponent: ProductCardComponent;
   private rollingCartComponent: RollingCartComponent;
@@ -27,7 +27,7 @@ export class SearchPage extends BasePage {
     // products are loaded in chunks by 28 items, so we need to scroll down of the page to load all products.
     //? Is it ok to use a function from the BasePage class in such a way?
     await this.scrollToEndOfPage();
-    
+
     // let's counts number of products on page to know maximum for the loop
     const getNumberOfProductsOnPage = await this.getNumberOfProductsOnPage();
     // check each product sequentially to find the first one which has set number of sizes
@@ -40,22 +40,35 @@ export class SearchPage extends BasePage {
       let currentProdSizes = await this.productCardComponent.availableSizeSelectorLocator.count();
       if (currentProdSizes >= numberOfAvailableSizes) {
         // return position and sizes quantity
-        return { productNumber: i, numberOfSizesToClick: currentProdSizes }
+        return { productNumber: i, numberOfSizesToClick: currentProdSizes };
       }
     }
-    throw new Error('No products with set number of sizes were found.');
+    throw new Error("No products with set number of sizes were found.");
   }
 
-
-  async addAllAvailableSizesToCartByNumber(product: Product): Promise<void> {
+  async addAllAvailableSizesToCartByNumber(product: Product, maxRetries: number = 3): Promise<void> {
     // products are loaded in chunks by 28 items, so we need to scroll down of the page to load all products.
     await this.scrollToEndOfPage();
-    
+
     // open the product card and add all available sizes
-    for(let i=0; i < product.numberOfSizesToClick; i++){
-        await this.productCardComponent.buttonOpenSizeSelectorLocator.nth(product.productNumber).click();
-        await this.productCardComponent.availableSizeSelectorLocator.nth(i).click();
-        await this.rollingCartComponent.closeRollingCart();
+    for (let i = 0; i < product.numberOfSizesToClick; i++) {
+      //! this test was flaky in this place. Dropdown list with sizes closes sometimes.
+      //! so I had to add a try catch with attempts
+      for (let attempt = 0; attempt < maxRetries; attempt++) {
+        try {
+          await expect(
+            this.productCardComponent.buttonOpenSizeSelectorLocator.nth(product.productNumber)
+          ).toBeVisible();
+          await this.productCardComponent.buttonOpenSizeSelectorLocator.nth(product.productNumber).click();
+          await expect(this.productCardComponent.availableSizeSelectorLocator.nth(i)).toBeVisible();
+          break;
+        } catch (error) {
+          if (attempt === maxRetries - 1) throw error;
+          await this.page.waitForTimeout(500);
+        }
+      }
+      await this.productCardComponent.availableSizeSelectorLocator.nth(i).click();
+      await this.rollingCartComponent.closeRollingCart();
     }
   }
 }
