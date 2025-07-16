@@ -33,7 +33,7 @@ type Pages = {
 export const test = base.extend<Pages>({
     stealthBrowser: async ({}, use) => {
     const browser = await chromium.launch({
-      headless: false,
+      headless: true,
       args: [
         '--disable-blink-features=AutomationControlled',
         '--disable-features=VizDisplayCompositor'
@@ -42,11 +42,6 @@ export const test = base.extend<Pages>({
     await use(browser)
     await browser.close()
   },
-  // stealthPage: async ({ stealthBrowser }, use) => {
-  //   const page = await stealthBrowser.newPage();
-  //   await use(page);
-  //   await page.close();
-  // },
   storageState: async ({ stealthBrowser }, use) => {
     const storageStatePath = ".auth/cookies.json";
     const isStorageStateFileExist = fs.existsSync(storageStatePath);
