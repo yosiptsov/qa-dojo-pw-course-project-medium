@@ -8,14 +8,14 @@ import { CartPage } from "../../apps/e2e/pages/CartPage";
 import { CreateAccountPage } from "../../apps/e2e/pages/CreateAccountPage";
 import { SearchPage } from "../../apps/e2e/pages/SearchPage";
 
-import { chromium } from 'playwright-extra'
-import stealth from 'puppeteer-extra-plugin-stealth'
-import type { Browser, Page } from 'playwright'
+import { chromium } from "playwright-extra";
+import stealth from "puppeteer-extra-plugin-stealth";
+import type { Browser, Page } from "playwright";
 
 import fs from "fs";
 
 // Configure plugins
-chromium.use(stealth())
+chromium.use(stealth());
 
 type Pages = {
   mainMenuComponent: MainMenuComponent;
@@ -31,16 +31,13 @@ type Pages = {
 };
 
 export const test = base.extend<Pages>({
-    stealthBrowser: async ({}, use) => {
+  stealthBrowser: async ({}, use) => {
     const browser = await chromium.launch({
       headless: true,
-      args: [
-        '--disable-blink-features=AutomationControlled',
-        '--disable-features=VizDisplayCompositor'
-      ]
-    })
-    await use(browser)
-    await browser.close()
+      args: ["--disable-blink-features=AutomationControlled", "--disable-features=VizDisplayCompositor"],
+    });
+    await use(browser);
+    await browser.close();
   },
   storageState: async ({ stealthBrowser }, use) => {
     const storageStatePath = ".auth/cookies.json";
@@ -60,7 +57,11 @@ export const test = base.extend<Pages>({
       );
 
       const page = await stealthBrowser.newPage();
-
+      
+      // Set Accept-Language header to open site with Ukrainian localization
+      await page.setExtraHTTPHeaders({
+        "Accept-Language": "uk-UA,uk;q=0.9,en;q=0.8",
+      });
       await page.goto("https://www.zara.com/ua/", { waitUntil: "commit" });
 
       // add cookies to close popup window 'Cookies Consent'
@@ -90,6 +91,12 @@ export const test = base.extend<Pages>({
   },
   page: async ({ stealthBrowser }, use) => {
     const page = await stealthBrowser.newPage();
+
+    // Set Accept-Language header to open site with Ukrainian localization
+    await page.setExtraHTTPHeaders({
+      "Accept-Language": "uk-UA,uk;q=0.9,en;q=0.8",
+    });
+
     await page.goto("/ua/", { waitUntil: "commit" });
     await use(page);
   },
