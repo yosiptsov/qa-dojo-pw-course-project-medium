@@ -45,7 +45,7 @@ export default defineConfig({
         extraHTTPHeaders: {
           "Accept-Language": "en-US,en;q=0.9",
         },
-        headless: false,
+        headless: true,
       },
     },
     {

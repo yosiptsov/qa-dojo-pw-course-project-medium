@@ -33,7 +33,7 @@ type Pages = {
 export const test = base.extend<Pages>({
   stealthBrowser: async ({}, use) => {
     const browser = await chromium.launch({
-      headless: false,
+      headless: true,
       args: ["--disable-blink-features=AutomationControlled", "--disable-features=VizDisplayCompositor"],
     });
     await use(browser);
