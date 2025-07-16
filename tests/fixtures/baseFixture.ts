@@ -8,7 +8,14 @@ import { CartPage } from "../../apps/e2e/pages/CartPage";
 import { CreateAccountPage } from "../../apps/e2e/pages/CreateAccountPage";
 import { SearchPage } from "../../apps/e2e/pages/SearchPage";
 
+import { chromium } from 'playwright-extra'
+import stealth from 'puppeteer-extra-plugin-stealth'
+import type { Browser, Page } from 'playwright'
+
 import fs from "fs";
+
+// Configure plugins
+chromium.use(stealth())
 
 type Pages = {
   mainMenuComponent: MainMenuComponent;
@@ -19,10 +26,28 @@ type Pages = {
   logonComponent: LogonComponent;
   createAccountFormComponent: CreateAccountFormComponent;
   createAccountPage: CreateAccountPage;
+  // this is for stealth browser
+  stealthBrowser: Browser;
 };
 
 export const test = base.extend<Pages>({
-  storageState: async ({ browser }, use) => {
+    stealthBrowser: async ({}, use) => {
+    const browser = await chromium.launch({
+      headless: false,
+      args: [
+        '--disable-blink-features=AutomationControlled',
+        '--disable-features=VizDisplayCompositor'
+      ]
+    })
+    await use(browser)
+    await browser.close()
+  },
+  // stealthPage: async ({ stealthBrowser }, use) => {
+  //   const page = await stealthBrowser.newPage();
+  //   await use(page);
+  //   await page.close();
+  // },
+  storageState: async ({ stealthBrowser }, use) => {
     const storageStatePath = ".auth/cookies.json";
     const isStorageStateFileExist = fs.existsSync(storageStatePath);
 
@@ -39,7 +64,7 @@ export const test = base.extend<Pages>({
         currentDate.getMilliseconds()
       );
 
-      const page = await browser.newPage();
+      const page = await stealthBrowser.newPage();
 
       await page.goto("https://www.zara.com/ua/", { waitUntil: "commit" });
 
@@ -68,7 +93,8 @@ export const test = base.extend<Pages>({
     }
     await use(storageStatePath);
   },
-  page: async ({ page }, use) => {
+  page: async ({ stealthBrowser }, use) => {
+    const page = await stealthBrowser.newPage();
     await page.goto("/ua/", { waitUntil: "commit" });
     await use(page);
   },

@@ -13,7 +13,7 @@ test(
     cartPage,
     logonComponent,
     createAccountFormComponent,
-    createAccountPage,
+    createAccountPage
   }) => {
     // test data setup
     const testOptions = {
