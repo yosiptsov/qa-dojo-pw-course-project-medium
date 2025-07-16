@@ -45,6 +45,18 @@ export default defineConfig({
         extraHTTPHeaders: {
           "Accept-Language": "en-US,en;q=0.9",
         },
+        headless: false,
+      },
+    },
+    {
+      name: "chromium-headless",
+      use: {
+        ...devices["Desktop Chrome"],
+        viewport: { width: 1920, height: 1080 },
+        extraHTTPHeaders: {
+          "Accept-Language": "en-US,en;q=0.9",
+        },
+        headless: true,
       },
     },
     {

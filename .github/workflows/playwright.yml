@@ -8,6 +8,7 @@ on:
         description: 'Choose a browser where tests will be run'
         options:
           - chromium
+          - chromium-headless
           - firefox
           - webkit
           - edge
