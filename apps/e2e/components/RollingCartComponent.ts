@@ -1,12 +1,12 @@
-import { expect, Locator } from "@playwright/test";
+import { expect, Locator, Page } from "@playwright/test";
 import { BaseComponent } from "./BaseComponent";
 
 export class RollingCartComponent extends BaseComponent{
     private buttonCloseLocator: Locator;
 
-    constructor(page){
+    constructor(page: Page){
         super(page);
-        this.buttonCloseLocator = this.page.getByRole('button', { name: 'Закрити' });
+        this.buttonCloseLocator = this.page.getByRole('button', { name: 'Close' });
     }
 
     async closeRollingCart(): Promise<void>{

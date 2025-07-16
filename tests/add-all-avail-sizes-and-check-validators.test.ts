@@ -17,7 +17,7 @@ test(
   }) => {
     // test data setup
     const testOptions = {
-      productName: "СУКНІ",
+      productName: "KNITWEAR",
       numberOfNeededSizes: 4,
     };
 

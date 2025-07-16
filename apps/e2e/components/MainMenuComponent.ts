@@ -9,7 +9,7 @@ export class MainMenuComponent extends BaseComponent{
     constructor(page: Page){
         super(page);
         this.productCard = new ProductCardComponent(this.page);
-        this.buttonOpenMenuLocator = this.page.getByRole('button', { name: 'Відкрити меню' });
+        this.buttonOpenMenuLocator = this.page.locator('[data-qa-id="layout-header-toggle-menu"]');
     }
     
     async openMainMenu(): Promise<void>{

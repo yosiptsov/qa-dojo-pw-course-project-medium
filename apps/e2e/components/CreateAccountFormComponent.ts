@@ -5,7 +5,7 @@ export class CreateAccountFormComponent extends BaseComponent {
   
     private getValidationMessageLocator = (createAccountFieldName: string) =>
     this.page.locator(
-      `//input[@data-qa-input-qualifier="${createAccountFieldName}"]/..//*[contains(text(), "Це поле є")]`
+      `//input[@data-qa-input-qualifier="${createAccountFieldName}"]/..//*[contains(text(), "Required field")]`
     );
 
   constructor(page: Page) {
