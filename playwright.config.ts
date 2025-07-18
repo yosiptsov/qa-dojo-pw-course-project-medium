@@ -62,26 +62,6 @@ export default defineConfig({
         trace: 'on-first-retry',
       },
     },
-    {
-      name: "firefox",
-      use: {
-        userAgent:
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (HTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        viewport: { width: 1920, height: 1080 },
-        extraHTTPHeaders: {
-          "Accept-Language": "en-US,en;q=0.9",
-        },
-      },
-    },
-
-    {
-      name: "webkit",
-      use: { ...devices["Desktop Safari"] },
-    },
-    {
-      name: "edge",
-      use: { ...devices["Desktop Edge"] },
-    },
 
     /* Test against mobile viewports. */
     // {
