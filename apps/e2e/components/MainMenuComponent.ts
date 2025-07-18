@@ -18,6 +18,7 @@ export class MainMenuComponent extends BaseComponent{
     }
 
     async clickProductInMainMenu(productName: string): Promise<void>{
+        await expect(this.page.getByRole('link', {name: productName})).toBeVisible();
         await this.page.getByRole('link', { name: productName }).click();
         await expect(this.productCard.productMediaImageLocator.last()).toBeVisible();
     }
