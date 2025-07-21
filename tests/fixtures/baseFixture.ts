@@ -60,10 +60,10 @@ export const test = base.extend<Pages>({
       
       // Set Accept-Language header to open site with Ukrainian localization
       await page.setExtraHTTPHeaders({
-        //"Accept-Language": "en-US,en;q=0.9",
-        "Accept-Language": "uk-UA,uk;q=0.9,en;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+        //"Accept-Language": "uk-UA,uk;q=0.9,en;q=0.8",
       });
-      await page.goto("https://www.zara.com/ua/", { waitUntil: "commit" });
+      await page.goto("https://www.zara.com/us/", { waitUntil: "commit" });
 
       // add cookies to close popup window 'Cookies Consent'
       await page.context().addCookies([
@@ -109,11 +109,11 @@ export const test = base.extend<Pages>({
 
     // Set Accept-Language header to open site with Ukrainian localization
     await page.setExtraHTTPHeaders({
-      //"Accept-Language": "en-US,en;q=0.9",
-      "Accept-Language": "uk-UA,uk;q=0.9,en;q=0.8",
+      "Accept-Language": "en-US,en;q=0.9",
+      //"Accept-Language": "uk-UA,uk;q=0.9,en;q=0.8",
     });
 
-    await page.goto("/ua/", { waitUntil: "commit" });
+    await page.goto("/us/", { waitUntil: "commit" });
     await use(page);
   },
   mainMenuComponent: async ({ page }, use) => {
