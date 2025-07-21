@@ -26,6 +26,10 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
+      env:
+        LANG: uk_UA.UTF-8
+        LC_ALL: uk_UA.UTF-8
+        TZ: Europe/Kiev
       run: npx playwright test --project=${{inputs.test_type}} --trace=on
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}

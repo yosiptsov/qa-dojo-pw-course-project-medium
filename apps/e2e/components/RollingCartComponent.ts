@@ -6,7 +6,8 @@ export class RollingCartComponent extends BaseComponent{
 
     constructor(page: Page){
         super(page);
-        this.buttonCloseLocator = this.page.getByRole('button', { name: 'Close' });
+        //this.buttonCloseLocator = this.page.getByRole('button', { name: 'Close' });
+        this.buttonCloseLocator = this.page.getByRole('button', { name: 'Закрити' });
     }
 
     async closeRollingCart(): Promise<void>{

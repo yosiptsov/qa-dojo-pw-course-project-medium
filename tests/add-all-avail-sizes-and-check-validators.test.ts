@@ -17,13 +17,13 @@ test(
   }) => {
     // test data setup
     const testOptions = {
-      productName: "KNITWEAR",
+      productName: "СУКНІ",
       numberOfNeededSizes: 4,
     };
 
     await test.step("Open main menu and select needed product", async () => {
-      await mainMenuComponent.openMainMenu();
-      await mainMenuComponent.clickProductInMainMenu(testOptions.productName);
+      //await mainMenuComponent.openMainMenu();
+      await mainMenuComponent.openMainMenuAndSelectProduct(testOptions.productName);
     });
 
     const firstProductWithAvailableSizes =

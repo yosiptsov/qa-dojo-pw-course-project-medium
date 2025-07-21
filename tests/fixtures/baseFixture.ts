@@ -33,7 +33,7 @@ type Pages = {
 export const test = base.extend<Pages>({
   stealthBrowser: async ({}, use) => {
     const browser = await chromium.launch({
-      headless: true,
+      //headless: true,
       args: ["--disable-blink-features=AutomationControlled", "--disable-features=VizDisplayCompositor"],
     });
     await use(browser);
@@ -60,9 +60,10 @@ export const test = base.extend<Pages>({
       
       // Set Accept-Language header to open site with Ukrainian localization
       await page.setExtraHTTPHeaders({
-        "Accept-Language": "en-US,en;q=0.9",
+        //"Accept-Language": "en-US,en;q=0.9",
+        "Accept-Language": "uk-UA,uk;q=0.9,en;q=0.8",
       });
-      await page.goto("https://www.zara.com/us/", { waitUntil: "commit" });
+      await page.goto("https://www.zara.com/ua/", { waitUntil: "commit" });
 
       // add cookies to close popup window 'Cookies Consent'
       await page.context().addCookies([
@@ -108,10 +109,11 @@ export const test = base.extend<Pages>({
 
     // Set Accept-Language header to open site with Ukrainian localization
     await page.setExtraHTTPHeaders({
-      "Accept-Language": "en-US,en;q=0.9",
+      //"Accept-Language": "en-US,en;q=0.9",
+      "Accept-Language": "uk-UA,uk;q=0.9,en;q=0.8",
     });
 
-    await page.goto("/us/", { waitUntil: "commit" });
+    await page.goto("/ua/", { waitUntil: "commit" });
     await use(page);
   },
   mainMenuComponent: async ({ page }, use) => {

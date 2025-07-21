@@ -34,6 +34,8 @@ export default defineConfig({
     screenshot: "only-on-failure",
     video: "retain-on-failure",
     headless: true,
+    locale: 'uk_UA',
+    timezoneId: 'Europe/Kiev',
   },
 
   /* Configure projects for major browsers */
@@ -46,8 +48,10 @@ export default defineConfig({
         extraHTTPHeaders: {
           "Accept-Language": "en-US,en;q=0.9",
         },
-        headless: true,
+        headless: false,
         trace: 'on-first-retry',
+        locale: 'uk_UA',
+        timezoneId: 'Europe/Kiev',
       },
     },
     {
@@ -60,6 +64,8 @@ export default defineConfig({
         },
         headless: true,
         trace: 'on-first-retry',
+        locale: 'uk_UA',
+        timezoneId: 'Europe/Kiev',
       },
     },
 

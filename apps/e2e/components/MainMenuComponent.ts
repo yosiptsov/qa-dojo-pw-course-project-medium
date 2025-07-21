@@ -5,6 +5,7 @@ import { ProductCardComponent } from "./ProductCardComponent";
 export class MainMenuComponent extends BaseComponent {
   private productCard: ProductCardComponent;
   private buttonOpenMenuLocator: Locator;
+  private buttonCloseMenuLocator: Locator;
 
   private getProductInMenuLocator = (productName: string) => this.page.getByRole("link", { name: productName });
 
@@ -12,22 +13,34 @@ export class MainMenuComponent extends BaseComponent {
     super(page);
     this.productCard = new ProductCardComponent(this.page);
     this.buttonOpenMenuLocator = this.page.locator('[data-qa-id="layout-header-toggle-menu"]');
+    this.buttonCloseMenuLocator = this.page.locator('[data-qa-id="layout-header-close-menu"]');
   }
 
-  async openMainMenu(): Promise<void> {
-    await expect(this.buttonOpenMenuLocator).toBeVisible();
-    await expect(this.buttonOpenMenuLocator).toBeEnabled();
-    await this.buttonOpenMenuLocator.click();
-  }
+  // async openMainMenu(maxRetries: number = 3): Promise<void> {
+  //   for (let attempt = 0; attempt < maxRetries; attempt++) {
+  //     try {
+  //       await expect(this.buttonOpenMenuLocator).toBeVisible();
+  //       await expect(this.buttonOpenMenuLocator).toBeEnabled();
+  //       await this.buttonOpenMenuLocator.click({ timeout: 3000 });
+  //       //await this.buttonCloseMenuLocator.click({ timeout: 1000 });
+  //       break;
+  //     } catch (error) {
+  //       if (attempt === maxRetries - 1) throw error;
+  //       await this.page.waitForTimeout(500);
+  //     }
+  //   }
+  // }
 
-  async clickProductInMainMenu(productName: string, maxRetries: number = 3): Promise<void> {
+  async openMainMenuAndSelectProduct(productName: string, maxRetries: number = 3): Promise<void> {
     for (let attempt = 0; attempt < maxRetries; attempt++) {
       try {
-        await this.getProductInMenuLocator(productName).click();
+        // await expect(this.buttonOpenMenuLocator).toBeVisible();
+        // await expect(this.buttonOpenMenuLocator).toBeEnabled();
+        await this.buttonOpenMenuLocator.click({ timeout: 3000 });
+        await this.getProductInMenuLocator(productName).click({ timeout: 3000 });
         await expect(this.productCard.productMediaImageLocator.last()).toBeVisible();
         break;
       } catch (error) {
-        console.error(`Attempt ${attempt + 1} failed:`, error);
         if (attempt === maxRetries - 1) throw error;
         await this.page.waitForTimeout(500);
       }
