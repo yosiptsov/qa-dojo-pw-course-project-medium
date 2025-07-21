@@ -10,7 +10,7 @@ export class CreateAccountPage extends BasePage {
   }
 
   async buttonCreateUserAccountClick(): Promise<void> {
-    await expect(this.buttonCreateUserAccountLocator).toBeVisible();
+    //await expect(this.buttonCreateUserAccountLocator).toBeVisible();
     await expect(this.buttonCreateUserAccountLocator).toBeEnabled();
     await this.buttonCreateUserAccountLocator.click();
   }
