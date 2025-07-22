@@ -1,12 +1,11 @@
 import { test as base } from "@playwright/test";
-import { MainMenuComponent } from "../../apps/e2e/components/MainMenuComponent";
-import { CreateAccountFormComponent } from "../../apps/e2e/components/CreateAccountFormComponent";
-import { HeaderComponents } from "../../apps/e2e/components/HeaderComponent";
-import { LogonComponent } from "../../apps/e2e/components/LogonComponent";
-import { ProductInCartComponent } from "../../apps/e2e/components/ProductInCartComponent";
-import { CartPage } from "../../apps/e2e/pages/CartPage";
-import { CreateAccountPage } from "../../apps/e2e/pages/CreateAccountPage";
-import { SearchPage } from "../../apps/e2e/pages/SearchPage";
+import { MainMenuComponent } from "../../apps/ui/components/MainMenuComponent";
+import { HeaderComponents } from "../../apps/ui/components/HeaderComponent";
+import { LogonComponent } from "../../apps/ui/components/LogonComponent";
+import { ProductInCartComponent } from "../../apps/ui/components/ProductInCartComponent";
+import { CartPage } from "../../apps/ui/pages/CartPage";
+import { CreateAccountPage } from "../../apps/ui/pages/CreateAccountPage";
+import { SearchPage } from "../../apps/ui/pages/SearchPage";
 
 import { chromium } from "playwright-extra";
 import stealth from "puppeteer-extra-plugin-stealth";
@@ -24,7 +23,6 @@ type Pages = {
   productInCartComponent: ProductInCartComponent;
   cartPage: CartPage;
   logonComponent: LogonComponent;
-  createAccountFormComponent: CreateAccountFormComponent;
   createAccountPage: CreateAccountPage;
   // this is for stealth browser
   stealthBrowser: Browser;
@@ -33,7 +31,6 @@ type Pages = {
 export const test = base.extend<Pages>({
   stealthBrowser: async ({}, use) => {
     const browser = await chromium.launch({
-      //headless: true,
       args: ["--disable-blink-features=AutomationControlled", "--disable-features=VizDisplayCompositor"],
     });
     await use(browser);
@@ -58,11 +55,11 @@ export const test = base.extend<Pages>({
 
       const page = await stealthBrowser.newPage();
       
-      // Set Accept-Language header to open site with Ukrainian localization
-      await page.setExtraHTTPHeaders({
-        "Accept-Language": "en-US,en;q=0.9",
-        //"Accept-Language": "uk-UA,uk;q=0.9,en;q=0.8",
-      });
+      // // Set Accept-Language header to open site with Ukrainian localization
+      // await page.setExtraHTTPHeaders({
+      //   "Accept-Language": "en-US,en;q=0.9",
+      //   //"Accept-Language": "uk-UA,uk;q=0.9,en;q=0.8",
+      // });
       await page.goto("https://www.zara.com/us/", { waitUntil: "commit" });
 
       // add cookies to close popup window 'Cookies Consent'
@@ -113,7 +110,7 @@ export const test = base.extend<Pages>({
       //"Accept-Language": "uk-UA,uk;q=0.9,en;q=0.8",
     });
 
-    await page.goto("/us/", { waitUntil: "commit" });
+    await page.goto("/", { waitUntil: "commit" });
     await use(page);
   },
   mainMenuComponent: async ({ page }, use) => {
@@ -139,10 +136,6 @@ export const test = base.extend<Pages>({
   logonComponent: async ({ page }, use) => {
     const logonComponent = new LogonComponent(page);
     await use(logonComponent);
-  },
-  createAccountFormComponent: async ({ page }, use) => {
-    const createAccountFormComponent = new CreateAccountFormComponent(page);
-    await use(createAccountFormComponent);
   },
   createAccountPage: async ({ page }, use) => {
     const createAccountPage = new CreateAccountPage(page);

@@ -23,11 +23,12 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: "html",
+  timeout: 60 * 1000,
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://localhost:3000',
-    baseURL: "https://www.zara.com/us/",
+    baseURL: "https://www.zara.com/ua/",
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
@@ -44,6 +45,7 @@ export default defineConfig({
   projects: [
     {
       name: "chromium",
+      timeout: 60 * 1000,
       use: {
         ...devices["Desktop Chrome"],
         viewport: { width: 1920, height: 1080 },
@@ -60,6 +62,7 @@ export default defineConfig({
     },
     {
       name: "chromium-headless",
+      timeout: 60 * 1000,
       use: {
         ...devices["Desktop Chrome"],
         viewport: { width: 1920, height: 1080 },

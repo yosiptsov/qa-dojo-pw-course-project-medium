@@ -12,7 +12,6 @@ test(
     productInCartComponent,
     cartPage,
     logonComponent,
-    createAccountFormComponent,
     createAccountPage
   }) => {
     // test data setup
@@ -41,7 +40,7 @@ test(
       await cartPage.clickContinueButton();
       await logonComponent.clickButtonRegister();
       await createAccountPage.buttonCreateUserAccountClick();
-      await createAccountFormComponent.checkCreateAccountFormValidators();
+      await createAccountPage.checkCreateAccountFormValidators();
     });
   }
 );

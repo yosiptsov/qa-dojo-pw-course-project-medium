@@ -7,7 +7,8 @@ export class LogonComponent extends BaseComponent{
 
     constructor(page: Page){
         super(page);
-        this.buttonRegisterLocator = this.page.locator('[data-qa-id="logon-view-alternate-button"]');
+        //this.buttonRegisterLocator = this.page.locator('[data-qa-id="logon-view-alternate-button"]');
+        this.buttonRegisterLocator = this.page.getByRole('link', { name: 'sign up' });
     }
 
     async clickButtonRegister(): Promise<void>{
