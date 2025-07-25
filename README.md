@@ -7,52 +7,89 @@ Playwright + Typescript course project. Difficulty: medium
 🤝Medium: https://docs.google.com/document/d/139Wn6zI_ZoXyucKacznWs-ZiDtRJJA_XKRoDKZrgaDU/edit?usp=sharing
 
 ---
+# Zara E-commerce Test Automation
 
-## Overview
+This project contains automated tests for Zara's e-commerce website using Playwright with TypeScript.
 
-This repository contains a medium-difficulty Playwright automation project using TypeScript. It is designed for learners who want to practice and improve their end-to-end testing skills with Playwright.
+## 🎯 Key Features
 
-## Features
+- Page Object Model (POM) implementation
+- Component-based architecture 
+- Stealth browser configuration to avoid bot detection
+- Custom test fixtures
+- Parallel test execution
+- Configurable test environments
+- GitHub Actions CI/CD integration
 
-- Automated browser testing with Playwright
-- TypeScript for type safety and maintainability
-- Example tests for web applications
-- Easy-to-follow structure for learning and extension
+## 🛠️ Tech Stack
 
-## Getting Started
+- Playwright
+- TypeScript
+- playwright-extra with stealth plugin
+- Node.js
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js (v18+ recommended)
-- npm or yarn
+- Node.js 16 or higher
+- npm package manager
 
 ### Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/yosiptsov/qa-dojo-pw-course-project-medium.git
+
+# Install dependencies
 npm install
+
+# Install Playwright browsers
+npx playwright install
 ```
 
-### Running Tests
+## 🧪 Running Tests
 
 ```bash
+# Run all tests in headless mode
 npx playwright test
+
+# Run tests in headed mode
+npx playwright test --headed
+
+# Run tests in specific browser
+npx playwright test --project=chromium
+
+# Run tests with trace
+npx playwright test --trace on
 ```
 
-### Project Structure
+## 📁 Project Structure
 
-- `tests/` - Contains Playwright test files
-- `playwright.config.ts` - Playwright configuration
-- `package.json` - Project dependencies and scripts
+```
+├── apps/
+│   └── ui/
+│       ├── components/    # Reusable UI components
+│       └── pages/        # Page Object Models
+├── tests/
+│   ├── fixtures/        # Test fixtures
+│   └── *.test.ts       # Test files
+├── playwright.config.ts  # Playwright configuration
+└── package.json
+```
 
-## Resources
+## 🔄 CI/CD
 
-- [Playwright Documentation](https://playwright.dev/docs/intro)
-- [TypeScript Documentation](https://www.typescriptlang.org/docs/)
+The project uses GitHub Actions for continuous integration. The workflow:
+- Runs on Ubuntu latest
+- Supports multiple browser configurations
+- Generates and stores test reports as artifacts
 
-## Contributing
+## 📄 Test Specifications
 
-Feel free to fork this repository and submit pull requests for improvements or additional test cases.
+- [Easy Level Specs](https://docs.google.com/document/d/1ahvP-Y9n6nMdMzMs-F0l0yunpTjYoXMpdEYb86F0638/edit?usp=sharing)
+- [Medium Level Specs](https://docs.google.com/document/d/139Wn6zI_ZoXyucKacznWs-ZiDtRJJA_XKRoDKZrgaDU/edit?usp=sharing)
 
-## License
+## 👤 Author
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+Yurii Osiptsov
