@@ -20,6 +20,7 @@ test(
     };
 
     await test.step("Open main menu and select needed product", async () => {
+      await homePage.popupWindowsComponent.clickPortalSelectionButtonIfExists();
       await homePage.mainMenuComponent.openMainMenuAndSelectProduct(testOptions.productName);
     });
 
@@ -42,7 +43,3 @@ test(
     });
   }
 );
-
-
-
-//id="onetrust-reject-all-handler"

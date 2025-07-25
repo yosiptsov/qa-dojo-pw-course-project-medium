@@ -1,7 +1,6 @@
 import { test as base } from "@playwright/test";
 import { HomePage } from "../../apps/ui/pages/HomePage";
 import { LoginPage } from "../../apps/ui/pages/LoginPage";
-import { ProductInCartComponent } from "../../apps/ui/components/ProductInCartComponent";
 import { CartPage } from "../../apps/ui/pages/CartPage";
 import { CreateAccountPage } from "../../apps/ui/pages/CreateAccountPage";
 import { SearchPage } from "../../apps/ui/pages/SearchPage";
@@ -38,61 +37,13 @@ export const test = base.extend<Pages>({
     const isStorageStateFileExist = fs.existsSync(storageStatePath);
 
     if (!isStorageStateFileExist) {
-      //prepare dates for cookie values:
-      const currentDate = new Date();
-      const expirationDate = new Date(
-        currentDate.getFullYear() + 1,
-        currentDate.getMonth(),
-        currentDate.getDay(),
-        currentDate.getHours(),
-        currentDate.getMinutes(),
-        currentDate.getSeconds(),
-        currentDate.getMilliseconds()
-      );
-
       const page = await stealthBrowser.newPage();
-      
-      // // Set Accept-Language header to open site with Ukrainian localization
-      // await page.setExtraHTTPHeaders({
-      //   "Accept-Language": "en-US,en;q=0.9",
-      //   //"Accept-Language": "uk-UA,uk;q=0.9,en;q=0.8",
-      // });
-      await page.goto("https://www.zara.com/us/", { waitUntil: "commit" });
+      const homePage = new HomePage(page);
 
-      // add cookies to close popup window 'Cookies Consent'
-      await page.context().addCookies([
-        {
-          name: "OptanonAlertBoxClosed",
-          value: currentDate.toISOString(),
-          domain: ".www.zara.com",
-          path: "/",
-          expires: expirationDate.getTime() / 1000,
-          sameSite: "Lax",
-        },
-        {
-          name: "OptanonConsent",
-          value:
-            "consentId=a6b5bed5-7019-4e4f-b385-b54c45fa1bdc&datestamp=Sun+Jul+13+2025+13%3A14%3A08+GMT%2B0300+(Eastern+European+Summer+Time)&version=202505.2.0&interactionCount=1&isAnonUser=1&isGpcEnabled=0&browserGpcFlag=0&isIABGlobal=false&hosts=&landingPath=NotLandingPage&groups=C0001%3A1%2CC0002%3A1%2CC0003%3A1%2CC0004%3A1&intType=1",
-          domain: ".www.zara.com",
-          path: "/",
-          expires: expirationDate.getTime() / 1000,
-          sameSite: "Lax",
-        },
-        {
-          name: "storepath",
-          value: "us%2Fen",
-          domain: ".zara.com",
-          path: "/",
-          expires: expirationDate.getTime() / 1000,
-        },
-        {
-          name: "selectedRegion",
-          value: "us",
-          domain: ".zara.com",
-          path: "/us",
-          expires: expirationDate.getTime() / 1000,
-        },
-      ]);
+      await page.goto("https://www.zara.com/us/", { waitUntil: "commit" });
+      await homePage.popupWindowsComponent.clickOptionalCookiesButtonIfExists();
+      await homePage.popupWindowsComponent.clickPortalSelectionButtonIfExists();
+
       await page.context().storageState({ path: storageStatePath as string });
       await page.close();
     }
@@ -101,13 +52,12 @@ export const test = base.extend<Pages>({
   page: async ({ stealthBrowser }, use) => {
     const page = await stealthBrowser.newPage();
 
-    // Set Accept-Language header to open site with Ukrainian localization
+    // Set Accept-Language header to open site with USA localization
     await page.setExtraHTTPHeaders({
       "Accept-Language": "en-US,en;q=0.9",
-      //"Accept-Language": "uk-UA,uk;q=0.9,en;q=0.8",
     });
 
-    await page.goto("/", { waitUntil: "commit" });
+    await page.goto("/us/", { waitUntil: "commit" });
     await use(page);
   },
   homePage: async ({ page }, use) => {
