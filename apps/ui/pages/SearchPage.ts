@@ -2,6 +2,7 @@ import { Page, expect } from "@playwright/test";
 import { BasePage } from "./BasePage";
 import { ProductCardComponent } from "../components/ProductCardComponent";
 import { RollingCartComponent } from "../components/RollingCartComponent";
+import { HeaderComponent } from "../components/HeaderComponent";
 
 export type Product = {
   productNumber: number;
@@ -10,11 +11,13 @@ export type Product = {
 export class SearchPage extends BasePage {
   private productCardComponent: ProductCardComponent;
   private rollingCartComponent: RollingCartComponent;
+  headerComponent: HeaderComponent;
 
   constructor(page: Page) {
     super(page);
     this.productCardComponent = new ProductCardComponent(this.page);
     this.rollingCartComponent = new RollingCartComponent(this.page);
+    this.headerComponent = new HeaderComponent(this.page);
   }
 
   private async getNumberOfProductsOnPage(): Promise<number> {
@@ -22,7 +25,6 @@ export class SearchPage extends BasePage {
     return productTilesCount;
   }
 
-  //async findFirstProductWithAvailableSizesMoreThan(numberOfAvailableSizes: number): Promise<Array<number> | undefined> {
   async findFirstProductWithAvailableSizesMoreThan(numberOfAvailableSizes: number): Promise<Product> {
     // products are loaded in chunks by 28 items, so we need to scroll down of the page to load all products.
     //? Is it ok to use a function from the BasePage class in such a way?
@@ -56,9 +58,7 @@ export class SearchPage extends BasePage {
       //! so I had to add a try catch with attempts
       for (let attempt = 0; attempt < maxRetries; attempt++) {
         try {
-          await expect(
-            this.productCardComponent.buttonOpenSizeSelectorLocator.nth(product.productNumber)
-          ).toBeVisible();
+          await expect(this.productCardComponent.buttonOpenSizeSelectorLocator.nth(product.productNumber)).toBeVisible();
           await this.productCardComponent.buttonOpenSizeSelectorLocator.nth(product.productNumber).click();
           await expect(this.productCardComponent.availableSizeSelectorLocator.nth(i)).toBeVisible();
           break;

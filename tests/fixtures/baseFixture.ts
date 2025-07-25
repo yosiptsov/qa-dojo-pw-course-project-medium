@@ -1,7 +1,6 @@
 import { test as base } from "@playwright/test";
-import { MainMenuComponent } from "../../apps/ui/components/MainMenuComponent";
-import { HeaderComponents } from "../../apps/ui/components/HeaderComponent";
-import { LogonComponent } from "../../apps/ui/components/LogonComponent";
+import { HomePage } from "../../apps/ui/pages/HomePage";
+import { LoginPage } from "../../apps/ui/pages/LoginPage";
 import { ProductInCartComponent } from "../../apps/ui/components/ProductInCartComponent";
 import { CartPage } from "../../apps/ui/pages/CartPage";
 import { CreateAccountPage } from "../../apps/ui/pages/CreateAccountPage";
@@ -17,12 +16,10 @@ import fs from "fs";
 chromium.use(stealth());
 
 type Pages = {
-  mainMenuComponent: MainMenuComponent;
+  homePage: HomePage;
   searchPage: SearchPage;
-  headerComponents: HeaderComponents;
-  productInCartComponent: ProductInCartComponent;
   cartPage: CartPage;
-  logonComponent: LogonComponent;
+  loginPage: LoginPage;
   createAccountPage: CreateAccountPage;
   // this is for stealth browser
   stealthBrowser: Browser;
@@ -113,28 +110,20 @@ export const test = base.extend<Pages>({
     await page.goto("/", { waitUntil: "commit" });
     await use(page);
   },
-  mainMenuComponent: async ({ page }, use) => {
-    const mainMenuComponent = new MainMenuComponent(page);
-    await use(mainMenuComponent);
+  homePage: async ({ page }, use) => {
+    const homePage = new HomePage(page);
+    await use(homePage);
   },
   searchPage: async ({ page }, use) => {
     const searchPage = new SearchPage(page);
     await use(searchPage);
   },
-  headerComponents: async ({ page }, use) => {
-    const headerComponents = new HeaderComponents(page);
-    await use(headerComponents);
-  },
-  productInCartComponent: async ({ page }, use) => {
-    const productInCartComponent = new ProductInCartComponent(page);
-    await use(productInCartComponent);
-  },
   cartPage: async ({ page }, use) => {
     const cartPage = new CartPage(page);
     await use(cartPage);
   },
-  logonComponent: async ({ page }, use) => {
-    const logonComponent = new LogonComponent(page);
+  loginPage: async ({ page }, use) => {
+    const logonComponent = new LoginPage(page);
     await use(logonComponent);
   },
   createAccountPage: async ({ page }, use) => {

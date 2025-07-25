@@ -1,7 +1,7 @@
 import { expect, Locator, Page } from "@playwright/test";
-import { BaseComponent } from "./BaseComponent";
+import { BasePage } from "./BasePage";
 
-export class LogonComponent extends BaseComponent{
+export class LoginPage extends BasePage{
     
     private buttonRegisterLocator: Locator;
 

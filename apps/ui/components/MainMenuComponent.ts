@@ -8,7 +8,6 @@ export class MainMenuComponent extends BaseComponent {
   private buttonCloseMenuLocator: Locator;
 
   private getProductInMenuLocator = (productName: string) => this.page.getByRole("link", { name: productName, exact: true });
-  //getByRole('link', { name: 'SHIRTS', exact: true })
 
   constructor(page: Page) {
     super(page);
@@ -31,6 +30,3 @@ export class MainMenuComponent extends BaseComponent {
     }
   }
 }
-
-
-//id="onetrust-reject-all-handler"
